@@ -17,12 +17,13 @@ class Player:
         """Player level; grow your stats."""
         self._life = 20
         """Player life; how much you can be hurt."""
-        self._defense = 4
-        """Player defense; Minimun attack to hit you."""
-        self._attack = 1
-        """Player attack; multiplie your attack by X."""
+        self._defense = 0
+        """Player defense; Reduce the taken damage."""
+        self._critic = 1.5
+        """Player critic; multiplie your damage by X."""
         self._backpack = Backpack()
         """Player backpack; where you put your itens"""
+        self._weapon = 0
     
     @property
     def name(self)->str:
@@ -65,12 +66,12 @@ class Player:
         self._defense = defense
     
     @property
-    def attack(self):
-        return self._attack
+    def critic(self):
+        return self._critic
     
     @property.setter
-    def attack(self,attack: int):
-        self._attack = attack
+    def critic(self,critic: int):
+        self._critic = critic
 
     @property
     def backpack(self):
@@ -93,17 +94,22 @@ class Player:
         else:
             return True
 
-    def take_damage(self,damage:int):
+    def take_damage(self,damage:int)-> bool:
         """
+        Reduce the damage from the life, including defense.
         Args:
             damage(int): damage to take
         Returns:
             bool: if is alive or not
         """
 
-        self.life = self.life - damage
+        self.life = self.life - (damage - self.defense) if (damage - self.defense) > 0 else self.life - 0
 
         return self.alive
+
+    def hit(self,enemy:type):
+        ...
+
 
 
 
