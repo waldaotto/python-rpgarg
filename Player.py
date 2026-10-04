@@ -1,3 +1,5 @@
+from Backpack import Backpack
+
 class Player:
     """Player objetct"""
 
@@ -19,9 +21,11 @@ class Player:
         """Player defense; Minimun attack to hit you."""
         self._attack = 1
         """Player attack; multiplie your attack by X."""
+        self._backpack = Backpack()
+        """Player backpack; where you put your itens"""
     
     @property
-    def name(self):
+    def name(self)->str:
         return self._name
     
     @property.setter
@@ -67,9 +71,41 @@ class Player:
     @property.setter
     def attack(self,attack: int):
         self._attack = attack
-    
 
+    @property
+    def backpack(self):
+        return self._backpack
     
+    @property.setter
+    def backpack(self,backpack: type):
+        self._backpack = backpack
+
+    @property
+    def alive(self)->bool:
+        """
+        Returns:
+            bool: if player is alive
+        """
+        
+        if self.life <= 0:
+            return False
+        
+        else:
+            return True
+
+    def take_damage(self,damage:int):
+        """
+        Args:
+            damage(int): damage to take
+        Returns:
+            bool: if is alive or not
+        """
+
+        self.life = self.life - damage
+
+        return self.alive
+
+
 
 
     
