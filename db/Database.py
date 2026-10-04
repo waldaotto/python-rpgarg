@@ -4,7 +4,7 @@ class Database:
 
     def __init__(self):
 
-        self._connection = sqlite3.connect("db/data.db")
+        self._connection = sqlite3.connect("data.db")
         self._cursor = self.connection.cursor()
     
     @property
