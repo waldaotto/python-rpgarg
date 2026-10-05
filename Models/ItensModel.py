@@ -4,12 +4,20 @@ class Items(Model):
 
     def __init__(self):
 
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS items(
+        self.TABLE = "itens"
+        self.COLUMNS = (
+            "item",
+            "description",
+            "value"
+        )
+
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS itens(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             item TEXT NOT NULL,
                             description TEXT NOT NULL,
-                            role INT NOT NULL
+                            value DECIMAL NOT NULL
+
                             )""")
 
         self.db.connection.commit()
-        
+

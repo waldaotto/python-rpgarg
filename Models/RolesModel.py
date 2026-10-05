@@ -6,7 +6,6 @@ class Roles(Model):
 
         self.TABLE = "roles"
         self.COLUMNS = (
-            "id",
             "role",
             "description",
             "life_bonus",

@@ -21,6 +21,7 @@ class Player(Model):
         )
 
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS player (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL UNIQUE,
                             role INT NOT NULL,
                             level NUMERIC NOT NULL,
