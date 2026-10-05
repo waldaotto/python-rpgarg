@@ -1,5 +1,5 @@
 from BackpackModel import Backpack
-from Core.Model import Model
+from core.Model import Model
 
 class Player(Model):
     """Player objetct"""
@@ -90,6 +90,16 @@ class Player(Model):
         self._backpack = backpack
 
     @property
+    def status(self):
+        return self._status
+    
+    @property.setter
+    def status(self,status: int):
+        # 0 or 1
+        self._status = status
+        self.update(self.id,"status",status)
+
+    @property
     def alive(self)->bool:
         """
         Returns:
@@ -102,24 +112,6 @@ class Player(Model):
         else:
             return True
 
-    def take_damage(self,damage:int)-> bool:
-        """
-        Reduce the damage from the life, including defense.
-        Args:
-            damage(int): damage to take
-        Returns:
-            bool: if is alive or not
-        """
-
-        self.life = self.life - (damage - self.defense) if (damage - self.defense) > 0 else self.life - 0
-
-        return self.alive
-    
-    def die(self):
-        ...
-
-    def hit(self,enemy:type):
-        ...
 
 
 

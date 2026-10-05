@@ -1,4 +1,4 @@
-from Core.Model import Model
+from core.Model import Model
 
 class Backpack(Model):
     """Player backpack object"""
