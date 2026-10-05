@@ -1,4 +1,4 @@
-from Backpack import Backpack
+from BackpackModel import Backpack
 from Core.Model import Model
 
 class Player(Model):
