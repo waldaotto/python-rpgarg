@@ -1,6 +1,6 @@
 from core.Model import Model
 
-class Items(Model):
+class Itens(Model):
 
     def __init__(self):
 
@@ -20,4 +20,6 @@ class Items(Model):
                             )""")
 
         self.db.connection.commit()
+
+
 
