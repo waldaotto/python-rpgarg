@@ -1,37 +1,40 @@
 from Backpack import Backpack
+from Core.Model import Model
 
-class Player:
+class Player(Model):
     """Player objetct"""
 
-    def __init__(self,name: str = "Joe"):
+    def __init__(self):
         """Player creation:
         Args:
             name(str): player name;
         """
-        
-        self._name = name
-        """Player name"""
-        self._role = None
-        """Player role; define your attack type."""
-        self._level = 0
-        """Player level; grow your stats."""
-        self._life = 20
-        """Player life; how much you can be hurt."""
-        self._defense = 0
-        """Player defense; Reduce the taken damage."""
-        self._critic = 1.5
-        """Player critic; multiplie your damage by X."""
-        self._backpack = Backpack()
-        """Player backpack; where you put your itens"""
-        self._weapon = 0
+
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS player (
+                            name TEXT NOT NULL UNIQUE,
+                            role INT NOT NULL,
+                            level NUMERIC NOT NULL,
+                            life INT NOT NULL,
+                            defense INT NOT NULL,
+                            critic NUMERIC,
+                            backpack INT NOT NULL,
+                            status BOOLEAN NOT NULL CHECK (status IN (0, 1))
+                            )""")
+
+        self.db.connection.commit()
     
+    @property
+    def id(self)->int:
+        return self._id
+
     @property
     def name(self)->str:
         return self._name
     
     @property.setter
-    def name(self,name: str="Joe"):
+    def name(self,name: str):
         self._name = name
+        self.update(self.id,"name",name)
 
     @property
     def role(self):
@@ -40,6 +43,7 @@ class Player:
     @property.setter
     def role(self,role):
         self._role = role
+        self.update(self.id,"role",role)
         
     @property
     def level(self):
@@ -48,6 +52,7 @@ class Player:
     @property.setter
     def level(self,level: float):
         self._level = level
+        self.update(self.id,"level",level)
     
     @property
     def life(self):
@@ -56,6 +61,7 @@ class Player:
     @property.setter
     def life(self,life: int):
         self._life = life
+        self.update(self.id,"life",life)
 
     @property
     def defense(self):
@@ -64,6 +70,7 @@ class Player:
     @property.setter
     def defense(self,defense: int):
         self._defense = defense
+        self.update(self.id,"defense",defense)
     
     @property
     def critic(self):
@@ -72,6 +79,7 @@ class Player:
     @property.setter
     def critic(self,critic: int):
         self._critic = critic
+        self.update(self.id,"critic",critic)
 
     @property
     def backpack(self):
@@ -106,6 +114,9 @@ class Player:
         self.life = self.life - (damage - self.defense) if (damage - self.defense) > 0 else self.life - 0
 
         return self.alive
+    
+    def die(self):
+        ...
 
     def hit(self,enemy:type):
         ...
