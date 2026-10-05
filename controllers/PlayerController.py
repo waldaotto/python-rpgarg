@@ -1,11 +1,37 @@
 from models.PlayerModel import Player
 from core.Controller import Controller
+import pandas as pd
 
 class PlayerController(Controller):
 
     def __init__(self):
         self.MODEL = Player()
-        self.VIEW = ...
+
+    def load_player(self,name:str):
+
+        data = self.MODEL.find_all()
+        df = (pd.DataFrame(data,columns=self.MODEL.COLUMNS))
+        player = df[df['name'] == name]
+
+        if player.empty:
+            ...
+        
+        dictPlayer = player.to_dict(orient='records')[0]
+
+        self.MODEL.name = dictPlayer["name"]
+        self.MODEL.role = dictPlayer["role"]
+        self.MODEL.level = dictPlayer["level"]
+        self.MODEL.life = dictPlayer["life"]
+        self.MODEL.defense = dictPlayer["defense"]
+        self.MODEL.critic = dictPlayer["critic"]
+        self.MODEL.backpack = dictPlayer["backpack"]
+        self.MODEL.status = dictPlayer["status"]
+        
+    def create_player(self,name:str,role:int)->int:
+        # need roles to receive bonus 
+        ...
+
+
 
     def take_damage(self,damage:int)-> bool:
         """

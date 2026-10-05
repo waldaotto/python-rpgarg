@@ -8,9 +8,4 @@ class Controller(ABC):
     def __init__(self):
         pass
 
-    def view(self):
-        
-        self.VIEW()
 
-    def redirect(self):
-        ...

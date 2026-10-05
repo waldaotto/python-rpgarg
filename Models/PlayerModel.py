@@ -9,6 +9,16 @@ class Player(Model):
         Args:
             name(str): player name;
         """
+        self.COLUMNS = (
+            "name",
+            "role",
+            "level",
+            "life",
+            "defense",
+            "critic",
+            "backpack",
+            "status"
+        )
 
         self.cursor.execute("""CREATE TABLE IF NOT EXISTS player (
                             name TEXT NOT NULL UNIQUE,
