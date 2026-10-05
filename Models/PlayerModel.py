@@ -96,8 +96,9 @@ class Player(Model):
         return self._backpack
     
     @property.setter
-    def backpack(self,backpack: type):
+    def backpack(self,backpack: int):
         self._backpack = backpack
+        self.update(self.id,"backpack",backpack)
 
     @property
     def status(self):
