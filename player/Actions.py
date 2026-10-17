@@ -45,8 +45,11 @@ class Actions:
         if self._is_dead():
             return
 
+        if self.player.defense > damage:
+            return
+
         try:
-            left = self.player.life - damage
+            left = self.player.life - (damage - self.player.defense)
 
             if left <= 0:
                 self.die()
@@ -59,6 +62,7 @@ class Actions:
             return
 
     def attack(self,enemy:Enemy):
+        
         ...
 
         
