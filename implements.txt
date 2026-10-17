@@ -1,1 +1,10 @@
 player/backpack -> players itens; backpack: playerid. equiped itens and not
+
+PLAYER <- BACKPACK <- itens
+BACKPACK = PLAYER ID, ITEM ID
+PLAYER = BACKPACK ID
+ACTIONS(PLAYER)??
+PLAYER.ACTIONS??
+PLAYER = MODEL
+ACTIONS = INTEFACE
+

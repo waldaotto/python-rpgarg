@@ -3,14 +3,14 @@ from core.Model import Model
 class Player(Model):
     """Player object"""
 
-    def __init__(self,name:str):
+    def __init__(self,username:str):
         super().__init__
         """
         Args:
             name (str): Name of your carachter.
         """
 
-        if len(name) > 30:
+        if len(username) > 30:
             raise ValueError("Name must have a lenght <30")
         # Init classs = logon 
         self.TABLE = 'player'
@@ -35,22 +35,8 @@ class Player(Model):
 
         # first create db
         self._constructor()
+        self._loader(name=username)
 
-        try:
-        
-            loaded_player = self.find_by(column='name',value=name)
-            
-            if not loaded_player:
-
-                self.id = self.add((name,None,None,None,None,None))
-                loaded_player = self.find(self.id)
-
-            self.id,self._name, self._life, self._defense,self._level,self._xp,self._honor = loaded_player[0]
-        
-        except Exception as e:
-
-            raise Exception('Error on player loader')
-        
     def _constructor(self):
         """Database Builder"""
 
@@ -65,6 +51,22 @@ class Player(Model):
             );""")
 
         self.db.connection.commit()
+
+    def _loader(self,name:str):
+        try:
+                
+            loaded_player = self.find_by(column='name',value=name)
+            
+            if not loaded_player:
+
+                self.id = self.add((name,None,None,None,None,None))
+                loaded_player = self.find(self.id)
+
+            self.id,self._name, self._life, self._defense,self._level,self._xp,self._honor = loaded_player[0]
+        
+        except Exception as e:
+
+            raise Exception('Error on player loader')
 
     @property
     def name(self) -> str:

@@ -55,6 +55,7 @@ class Itens(Model):
         # value = attack / defense / healing power, depending on the type
         return [
             # Weapons (value = attack)
+            ("Little Sword",  "Small and metallic",                            1, 5,  10),
             ("Sword",         "Big and metallic",                              1, 15,  50),
             ("Dagger",        "Small, light and quick to strike",              1,  8,  25),
             ("War Axe",       "Heavy blade that splits shields in two",        1, 22,  90),
