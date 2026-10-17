@@ -22,7 +22,7 @@ class Model(ABC):
 
         return self.cursor.fetchall()
 
-    def find_by_id(self,id:int)->list:
+    def find(self,id:int)->list:
         """
         Args:
             id(int): register id
