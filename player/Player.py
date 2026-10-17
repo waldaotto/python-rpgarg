@@ -30,6 +30,7 @@ class Player(Model):
         self._xp = 0
         self._honor = 0
         self.alive = True
+        # self.backpack
 
         # first create db
         self._constructor()

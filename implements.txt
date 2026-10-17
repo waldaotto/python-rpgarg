@@ -1,0 +1,1 @@
+player/backpack -> players itens; backpack: playerid. equiped itens and not
