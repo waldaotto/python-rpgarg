@@ -4,6 +4,7 @@ class Player(Model):
     """Player object"""
 
     def __init__(self,name:str):
+        super().__init__
         """
         Args:
             name (str): Name of your carachter.
@@ -62,6 +63,8 @@ class Player(Model):
             xp INTEGER DEFAULT 0,
             honor INTEGER DEFAULT 0
             );""")
+
+        self.db.connection.commit()
 
     @property
     def name(self) -> str:

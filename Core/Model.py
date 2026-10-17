@@ -84,6 +84,27 @@ class Model(ABC):
 
         return self.cursor.lastrowid
 
+    def add_many(self, rows: list[tuple]) -> int:
+        """Insert several records at once.
+
+        Args:
+            rows (list[tuple]): Each tuple holds the values for one record,
+                in the same order as `COLUMNS`.
+
+        Returns:
+            int: The number of records inserted.
+        """
+        columns = ", ".join(self.COLUMNS)
+        placeholders = ", ".join("?" for _ in self.COLUMNS)
+
+        self.cursor.executemany(
+            f"INSERT INTO {self.TABLE} ({columns}) VALUES ({placeholders})",
+            rows,
+        )
+        self.db.connection.commit()
+
+        return self.cursor.rowcount
+
     def drop(self, id: int) -> int:
         """Delete the record with the given id.
 
