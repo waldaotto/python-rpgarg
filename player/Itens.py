@@ -12,7 +12,7 @@ class Itens(Model):
             'desc',
             'item_type',
             'value',
-            'price'
+            'price',
         )
 
         self._constructor()

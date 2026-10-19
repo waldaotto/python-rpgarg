@@ -137,3 +137,7 @@ class Model(ABC):
         self.db.connection.commit()
 
         return id
+
+
+    def _constructor(self,row_types:list[str]):
+        ...

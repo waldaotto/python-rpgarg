@@ -20,7 +20,7 @@ class Player(Model):
             'defense',
             'level',
             'xp',
-            'honor'
+            'honor',
         )
 
         self.id = None
