@@ -1,4 +1,5 @@
 from core.Model import Model
+from player.Backpack import Backpack
 
 class Player(Model):
     """Player object"""
@@ -44,7 +45,11 @@ class Player(Model):
         ])
         self._loader(name=username)
 
+        self.backpack = Backpack(player_id=self.id)
+        """Player backpack: itens"""
+
     def _loader(self,name:str):
+        """Load player by name"""
         try:
                 
             loaded_player = self.find_by(column='name',value=name)
