@@ -4,11 +4,11 @@ class Player(Model):
     """Player object"""
 
     def __init__(self,username:str):
-        super().__init__
         """
         Args:
             name (str): Name of your carachter.
         """
+        super().__init__()
 
         if len(username) > 30:
             raise ValueError("Name must have a lenght <30")
@@ -16,7 +16,7 @@ class Player(Model):
         self.TABLE = 'player'
         self.COLUMNS = (
             'name',
-            'life'
+            'life',
             'defense',
             'level',
             'xp',
@@ -34,23 +34,15 @@ class Player(Model):
         # self.backpack
 
         # first create db
-        self._constructor()
+        self._constructor([
+            "TEXT UNIQUE NOT NULL",
+            "INTEGER DEFAULT 10",
+            "INTEGER DEFAULT 0",
+            "INTEGER DEFAULT 0",
+            "INTEGER DEFAULT 0",
+            "INTEGER DEFAULT 0",
+        ])
         self._loader(name=username)
-
-    def _constructor(self):
-        """Database Builder"""
-
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS player (
-            id INTEGER AUTOINCREMENT PRIMARY KEY,
-            name VARCHAR(30) UNIQUE NOT NULL,
-            life INTEGER DEFAULT 2,
-            defense INTEGER DEFAULT 1,
-            level INTEGER DEFAULT 1,
-            xp INTEGER DEFAULT 0,
-            honor INTEGER DEFAULT 0
-            );""")
-
-        self.db.connection.commit()
 
     def _loader(self,name:str):
         try:
@@ -59,14 +51,14 @@ class Player(Model):
             
             if not loaded_player:
 
-                self.id = self.add((name,None,None,None,None,None))
+                self.id = self.add((name,10,0,0,0,0))
                 loaded_player = self.find(self.id)
 
             self.id,self._name, self._life, self._defense,self._level,self._xp,self._honor = loaded_player[0]
         
         except Exception as e:
 
-            raise Exception('Error on player loader')
+            raise Exception("Error on player loader") from e
 
     @property
     def name(self) -> str:

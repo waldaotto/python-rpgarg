@@ -1,20 +1,12 @@
 
-from Core.Model import Model
+from player.Player import Player
 
+def main():
 
-class Item(Model):
-
-    TABLE = "banana"
-    COLUMNS = ("nome",)
-
-    def c(self):
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS banana(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome VARCHAR(20)
-        )""")
-
+    s = Player('Joao')
+    print(s.life)
 
     
-print(Item().find_by_id(1))
-
+if __name__ == "__main__":
+    main()
 

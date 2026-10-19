@@ -5,7 +5,7 @@ class Itens(Model):
 
     def __init__(self):
 
-        super().__init__
+        super().__init__()
         self.TABLE = 'item'
         self.COLUMNS = (
             'item',
@@ -15,21 +15,15 @@ class Itens(Model):
             'price',
         )
 
-        self._constructor()
+        self._constructor([
+            "TEXT NOT NULL",
+            "TEXT NOT NULL",
+            "INT NOT NULL",
+            "NOT NULL",
+            "INTEGER NOT NULL",
+            "INTEGER NOT NULL",
+        ])
         self._loader()
-
-    def _constructor(self):
-        """Helper to build databases"""
-
-        self.cursor.execute(f"""CREATE TABLE IF NOT EXISTS {self.TABLE} (
-                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            item TEXT NOT NULL,
-                            desc TEXT NOT NULL,
-                            item_type INT NOT NULL,
-                            value INTEGER NOT NULL,
-                            price INTEGER NOT NULL
-                            );""") 
-        #store - price *100 / get - price /100
 
     def _loader(self):
         """Load all records into database"""

@@ -61,7 +61,7 @@ class Model(ABC):
         if not column in self.COLUMNS:
             raise KeyError(f'{column} doesnt exists in table.')
 
-        self.cursor.execute(f"SELECT * FROM {self.TABLE} WHERE {column} = ?", (id,))
+        self.cursor.execute(f"SELECT * FROM {self.TABLE} WHERE {column} = ?", (value,))
         return self.cursor.fetchall()
 
     def add(self, values: tuple) -> int:
@@ -140,4 +140,22 @@ class Model(ABC):
 
 
     def _constructor(self,row_types:list[str]):
-        ...
+        """Build the database"""
+
+        if len(row_types) != len(self.COLUMNS):
+            raise ValueError(f"The rows types mut be the same len as columns")
+
+        lines = []
+        for n in range(len(self.COLUMNS)):
+            lines.append(f"{self.COLUMNS[n]} {row_types[n]}")
+
+        columns = ",".join(lines)
+            
+        self.cursor.execute(f"""CREATE TABLE IF NOT EXISTS {self.TABLE} (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            {columns}
+                            );""")
+        self.db.connection.commit()
+
+
+
