@@ -19,11 +19,11 @@ class Backpack(Model):
 
     def _loader(self,player_id:int):
 
-        bpk = self.find_by(column="player_id",value=player_id)[0]
+        bpk = self.find_by(column="player_id",value=player_id)
 
         if bpk:
-
-            self.id,self._player_id, self._slots = bpk
+            
+            self.id,self._player_id, self._slots = bpk[0]
             return
 
         self.id, self._player_id,self._slots = self.add(values=(player_id,5)), player_id, 5

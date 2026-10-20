@@ -1,5 +1,7 @@
 from player.Player import Player
 from entities.Enemy import Enemy
+from player.Itens import *
+from random import randint
 
 class Actions:
     """Player actions"""
@@ -9,9 +11,6 @@ class Actions:
         Args:
             player(Player): Player instance
         """
-        
-        if not isinstance(player):
-            raise ValueError("Player parameter must be a instance")
 
         self.player = player
     
@@ -61,9 +60,35 @@ class Actions:
             print("Error damage: "+e)
             return
 
-    def attack(self,enemy:Enemy):
+    def attack(self,enemy:Enemy,attack_dmg: int = 0)->int:
+        """Attack an enemy
+        Args:
+            enemy (enemy): Enemy to attack.
+            attack_dmg (int): External attack dmg
+        Returns:
+            int: Enemy's life
+        """
         
-        ...
+        slots = self.player.slots()
+        lf = enemy.life
+
+        for item in slots:
+            if not item:
+                continue
+
+            item_id,item_name,item_type,item_value,item_price = item
+            if item_type == 1:
+                attack_dmg += self._randomize_damage(item_value)
+
+        enemy.damage(attack_dmg)
+        print(f"{self.player.name} attacked Enemy {enemy.name} and caused: Enemy: -{lf-enemy.life}")
+        return enemy.life 
+
+    def _randomize_damage(self,damage:int)->int:
+        """Helper to randomize the item damage"""
+
+        return randint((damage - ((damage/100)*25)),(damage + ((damage/100)*25)))
+
 
         
 

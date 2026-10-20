@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 class Enemy:
     
-    def __init__(self,name:str,life:int,defense:int,attack:tuple):
+    def __init__(self,name:str,life:int,defense:int,attack:tuple[int]):
         """
         Args:
             name (str): enemy name
@@ -23,9 +23,6 @@ class Enemy:
 
         if not len(attack) == 2:
             raise ValueError("Attack must be a tuple with 2 integers; (int,int+)") 
-
-        if not (isinstance(attack[0],int) or isinstance(attack[1],int)):
-            raise ValueError("Attack must be a tuple with 2 integers; (int,int+)")
 
         if attack[1] < attack[0]:
             raise ValueError("Second value in attack must be greater than first one: (3,7)")

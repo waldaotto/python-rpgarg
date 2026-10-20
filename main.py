@@ -1,10 +1,13 @@
 
 from player.Player import Player
+from player.Actions import Actions
+from entities.Enemy import Enemy
 
 def main():
+    ...
 
-    s = Player('Joao')
-    print(s.life)
+
+    
 
     
 if __name__ == "__main__":

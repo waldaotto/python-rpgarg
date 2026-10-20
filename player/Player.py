@@ -22,6 +22,11 @@ class Player(Model):
             'level',
             'xp',
             'honor',
+            'slot_0',
+            'slot_1',
+            'slot_2',
+            'slot_3',
+            'slot_4',
         )
 
         self.id = None
@@ -32,6 +37,11 @@ class Player(Model):
         self._xp = 0
         self._honor = 0
         self.alive = True
+        self._slot0 = None
+        self._slot1 = None
+        self._slot2 = None
+        self._slot3 = None
+        self._slot4 = None
         # self.backpack
 
         # first create db
@@ -42,6 +52,11 @@ class Player(Model):
             "INTEGER DEFAULT 0",
             "INTEGER DEFAULT 0",
             "INTEGER DEFAULT 0",
+            "INTEGER",
+            "INTEGER",
+            "INTEGER",
+            "INTEGER",
+            "INTEGER",
         ])
         self._loader(name=username)
 
@@ -56,14 +71,14 @@ class Player(Model):
             
             if not loaded_player:
 
-                self.id = self.add((name,10,0,0,0,0))
+                self.id = self.add((name,10,0,0,0,0,None,None,None,None,None))
                 loaded_player = self.find(self.id)
 
-            self.id,self._name, self._life, self._defense,self._level,self._xp,self._honor = loaded_player[0]
+            self.id,self._name, self._life, self._defense,self._level,self._xp,self._honor,self._slot0,self._slot1,self._slot2,self._slot3,self._slot4 = loaded_player[0]
         
         except Exception as e:
 
-            raise Exception("Error on player loader") from e
+            raise Exception("Error on player loader", e)
 
     @property
     def name(self) -> str:
@@ -134,4 +149,66 @@ class Player(Model):
         self.update(self.id, "honor", value)
         self._honor = value
 
-    
+    # slot are int to receive an item id
+    # if nul = non equiped
+    @property
+    def slot0(self):
+        return self._slot0
+
+    @slot0.setter
+    def slot0(self, value: int):
+        self.update(self.id, "slot0", value)
+        self._slot0 = value
+    @property
+    def slot1(self):
+        return self._slot1
+
+    @slot1.setter
+    def slot1(self, value: int):
+        self.update(self.id, "slot1", value)
+        self._slot1 = value
+
+    @property
+    def slot1(self):
+        return self._slot1
+
+    @slot1.setter
+    def slot1(self, value: int):
+        self.update(self.id, "slot1", value)
+        self._slot1 = value
+
+    @property
+    def slot2(self):
+        return self._slot2
+
+    @slot2.setter
+    def slot2(self, value: int):
+        self.update(self.id, "slot2", value)
+        self._slot2 = value
+
+    @property
+    def slot3(self):
+        return self._slot3
+
+    @slot3.setter
+    def slot3(self, value: int):
+        self.update(self.id, "slot3", value)
+        self._slot3 = value
+
+    @property
+    def slot4(self):
+        return self._slot4
+
+    @slot4.setter
+    def slot4(self, value: int):
+        self.update(self.id, "slot4", value)
+        self._slot4 = value
+
+    def slots(self)->list[property]:
+        """return array all itens"""
+
+        return [self.slot0,
+                self.slot1,
+                self.slot2,
+                self.slot3,
+                self.slot4]

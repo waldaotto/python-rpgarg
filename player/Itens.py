@@ -19,11 +19,11 @@ class Itens(Model):
             "TEXT NOT NULL",
             "TEXT NOT NULL",
             "INT NOT NULL",
-            "NOT NULL",
             "INTEGER NOT NULL",
             "INTEGER NOT NULL",
         ])
         self._loader()
+        self.types = Item_types()
 
     def _loader(self):
         """Load all records into database"""
@@ -85,18 +85,10 @@ class Item_types(Model):
     def __init__(self):
         super().__init__()
         self.TABLE = 'item_type'
-        self.COLUMNS = ("type")
+        self.COLUMNS = ("type",)
 
-        self._constructor()
+        self._constructor(["TEXT NOT NULL"])
         self._loader()
-
-    def _constructor(self):
-        """Helper to Build database"""
-
-        self.cursor.execute("""CREATE TABLE IF NOT EXISTS item_type (
-                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            type TEXT
-                            );""")
 
     def _loader(self):
         """Load all records into database"""
