@@ -31,7 +31,6 @@ class Itens(Model):
         itens_to_load = self._itens()
 
         if len(self.find_all()) == len(itens_to_load):
-
             return
 
         try:

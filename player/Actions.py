@@ -78,9 +78,11 @@ class Actions:
             item_id,item_name,item_type,item_value,item_price = item
             if item_type == 1:
                 attack_dmg += self._randomize_damage(item_value)
-
-        enemy.damage(attack_dmg)
-        return enemy.life 
+        try:
+            enemy.damage(attack_dmg)
+            return enemy.life 
+        except Exception as e:
+            print("Error attack: "+e) 
 
     def _randomize_damage(self,damage:int)->int:
         """Helper to randomize the item damage"""
@@ -95,23 +97,36 @@ class Actions:
         for slot in range(len(self.player.slots())):
             if self.player.slots()[slot]:
                 continue
-            setattr(self.player,f"slot{slot}",item_id)
-            self.player.backpack.remove_item(item_id)
-            break
+
+            try:
+                setattr(self.player,f"slot{slot}",item_id)
+                self.player.backpack.remove_item(item_id)
+                break
+            except Exception as e:
+                print("Error equip: "+e) 
+                return
 
     def unequip_item(self,item_id):
 
-        self._test_item(item_id)
+        if not self.player.backpack._item_exists(item_id):
+            raise ValueError(f"Item ID {item_id} doesn't exists")
 
         slots = self.player.slots()
+
+        if not item_id in slots:
+            raise ValueError(f"Item ID {item_id} isn't equiped")
 
         for slot in range(len(slots)):
             if not slots[slot]:
                 continue
 
-            setattr(self.player,f"slot{slot}",None)
-            self.player.backpack.put_item(item_id)
-            break
+            try:
+                setattr(self.player,f"slot{slot}",None)
+                self.player.backpack.put_item(item_id)
+                break
+            except Exception as e:
+                print("Error unequip: "+e) 
+                return
 
     def _test_item(self,item_id:int):
         """Tests if item exists and is in backpack"""
@@ -122,19 +137,4 @@ class Actions:
         if not self.player.backpack._in_backpack(item_id):
             raise ValueError(f"Item ID {item_id} isn't in backpack")
 
-        return
-
-
-            
-
-
-
-
-
-        
-
-        
-
-
-
-        
+        return   
