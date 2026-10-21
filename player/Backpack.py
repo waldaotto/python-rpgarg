@@ -97,6 +97,8 @@ class Backpack(Model):
 
         return True if total_itens > 0 else False
 
+    
+
 
 
         

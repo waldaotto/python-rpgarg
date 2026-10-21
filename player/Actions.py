@@ -70,7 +70,6 @@ class Actions:
         """
         
         slots = self.player.slots()
-        lf = enemy.life
 
         for item in slots:
             if not item:
@@ -87,6 +86,49 @@ class Actions:
         """Helper to randomize the item damage"""
 
         return randint((damage - ((damage/100)*25)),(damage + ((damage/100)*25)))
+
+    def equip_item(self,item_id:int):
+        """Equip an item in a empty slot"""
+
+        self._test_item(item_id)
+
+        for slot in range(len(self.player.slots())):
+            if self.player.slots()[slot]:
+                continue
+            setattr(self.player,f"slot{slot}",item_id)
+            self.player.backpack.remove_item(item_id)
+            break
+
+    def unequip_item(self,item_id):
+
+        self._test_item(item_id)
+
+        slots = self.player.slots()
+
+        for slot in range(len(slots)):
+            if not slots[slot]:
+                continue
+
+            setattr(self.player,f"slot{slot}",None)
+            self.player.backpack.put_item(item_id)
+            break
+
+    def _test_item(self,item_id:int):
+        """Tests if item exists and is in backpack"""
+
+        if not self.player.backpack._item_exists(item_id):
+            raise ValueError(f"Item ID {item_id} doesn't exists")
+
+        if not self.player.backpack._in_backpack(item_id):
+            raise ValueError(f"Item ID {item_id} isn't in backpack")
+
+        return
+
+
+            
+
+
+
 
 
         

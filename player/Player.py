@@ -22,11 +22,11 @@ class Player(Model):
             'level',
             'xp',
             'honor',
-            'slot_0',
-            'slot_1',
-            'slot_2',
-            'slot_3',
-            'slot_4',
+            'slot0',
+            'slot1',
+            'slot2',
+            'slot3',
+            'slot4',
         )
 
         self.id = None

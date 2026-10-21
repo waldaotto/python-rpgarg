@@ -7,7 +7,9 @@ from player._item_bpk import _item_bpk
 
 
 def main():
-    ...
+    player = Player("Joao")
+    action = Actions(player)
+    action.equip_item(1)
 
     
 
