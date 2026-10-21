@@ -66,7 +66,7 @@ class Actions:
             enemy (enemy): Enemy to attack.
             attack_dmg (int): External attack dmg
         Returns:
-            int: Enemy's life
+            int: Enemy's life left
         """
         
         slots = self.player.slots()
@@ -81,7 +81,6 @@ class Actions:
                 attack_dmg += self._randomize_damage(item_value)
 
         enemy.damage(attack_dmg)
-        print(f"{self.player.name} attacked Enemy {enemy.name} and caused: Enemy: -{lf-enemy.life}")
         return enemy.life 
 
     def _randomize_damage(self,damage:int)->int:

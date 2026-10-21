@@ -1,3 +1,0 @@
-validation to add item bpk 
-equip itens player 
-attack

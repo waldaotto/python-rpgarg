@@ -2,6 +2,7 @@ from core.Model import Model
 from player._item_bpk import _item_bpk
 from player.Itens import Itens
 
+
 class Backpack(Model):
 
     def __init__(self,player_id):
@@ -48,7 +49,57 @@ class Backpack(Model):
             itens.append(self.itens_data.find(id)[0])
 
         return itens
-    
+
+    def put_item(self,item_id:int):
+        """Put a item into backpack"""
+
+        if self._is_full():
+            raise KeyError(f"Backpack is already full")
+
+        if not self._item_exists(item_id):
+            raise ValueError(f"Item ID {item_id} does'nt exists")
+
+        return self.item_cursor.add((self.id,item_id))
+
+    def remove_item(self,item_id:int):
+        """Remove a item from backpack"""
+
+        if not self._item_exists(item_id):
+            raise ValueError(f"Item ID {item_id} doesn't exists")
+
+        if not self._in_backpack(item_id=item_id):
+            raise ValueError(f"Item ID {item_id} isn't in backpack")
+
+        return self.item_cursor.drop(item_id)
+
+
+    def _is_full(self)->bool:
+        """Answers if backpack is full"""
+
+        self.item_cursor.cursor.execute(f"""SELECT COUNT(*) FROM {self.item_cursor.TABLE} WHERE backpack_id = ?""",(self.id,))
+        total_itens = self.item_cursor.cursor.fetchone()[0]
+
+        return True if total_itens >= self._slots else False
+
+    def _item_exists(self,item_id:int)->bool:
+        """Verify if item exists"""
+
+        if self.itens_data.find(item_id):
+            return True
+        else:
+            return False
+
+    def _in_backpack(self,item_id:int)->bool:
+        """Verify if item is in backpack"""
+
+        self.item_cursor.cursor.execute(f"""SELECT COUNT(*) FROM {self.item_cursor.TABLE} WHERE backpack_id = ? AND item_id = ?""",(self.id,item_id))
+        total_itens = self.item_cursor.cursor.fetchone()[0]
+
+        return True if total_itens > 0 else False
+
+
+
+        
 
 
 
