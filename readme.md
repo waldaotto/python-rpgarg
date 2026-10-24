@@ -1,4 +1,3 @@
-
 # RPG Deck Builder
 
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white)](https://www.python.org/)
@@ -59,7 +58,7 @@ The custom engine will be developed progressively according to the game's requir
 
 ## 🗺️ Roadmap
 
-- [ ] Define the initial project structure.
+- [X] Define the initial project structure.
 - [ ] Develop the foundation of the custom engine.
 - [ ] Implement SQLite3 database connection.
 - [ ] Develop character and attribute systems.
