@@ -75,7 +75,8 @@ class Player(Model):
                 loaded_player = self.find(self.id)
 
             self.id,self._name, self._life, self._defense,self._level,self._xp,self._honor,self._slot0,self._slot1,self._slot2,self._slot3,self._slot4 = loaded_player[0]
-        
+
+            self.alive = True if self._life > 0 else False
         except Exception as e:
 
             raise Exception("Error on player loader", e)

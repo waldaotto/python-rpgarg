@@ -70,7 +70,7 @@ class Backpack(Model):
         if not self._in_backpack(item_id=item_id):
             raise ValueError(f"Item ID {item_id} isn't in backpack")
 
-        return self.item_cursor.drop(item_id)
+        return self.item_cursor.remove_one(item_id)
 
 
     def _is_full(self)->bool:

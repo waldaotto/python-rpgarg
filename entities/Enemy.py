@@ -28,7 +28,7 @@ class Enemy:
             raise ValueError("Second value in attack must be greater than first one: (3,7)")
 
         self.name = name
-        self.attack = attack
+        self.attack_dmg = attack
         self.life = life
         self.defense = defense
         self.alive = True
@@ -51,7 +51,7 @@ class Enemy:
         if self._is_dead():
             return
 
-        damage = randint(self.attack)
+        damage = randint(self.attack_dmg[0],self.attack_dmg[1])
         player.damage(damage)
 
     def damage(self,damage:int):

@@ -13,6 +13,7 @@ class Actions:
         """
 
         self.player = player
+        self.backpack = player.backpack
     
     def _is_dead(self)->bool:
         """Returns if player is dead"""
@@ -68,10 +69,13 @@ class Actions:
         Returns:
             int: Enemy's life left
         """
+
+        if self._is_dead():
+            return
         
         slots = self.player.slots()
 
-        for item in slots:
+        for item in ((slots)):
             if not item:
                 continue
 
@@ -82,7 +86,7 @@ class Actions:
             enemy.damage(attack_dmg)
             return enemy.life 
         except Exception as e:
-            print("Error attack: "+e) 
+            print(f"Error attack: {e}") 
 
     def _randomize_damage(self,damage:int)->int:
         """Helper to randomize the item damage"""
@@ -93,23 +97,24 @@ class Actions:
         """Equip an item in a empty slot"""
 
         self._test_item(item_id)
+        slots = self.player.slots()
 
-        for slot in range(len(self.player.slots())):
-            if self.player.slots()[slot]:
+        for slot in range(len(slots)):
+            if slots[slot]:
                 continue
 
             try:
                 item = self.player.backpack.item_info(item_id)
-
                 if item[2] in [2,3,4]:
                     self.player.defense += item[3]
 
-                setattr(self.player,f"slot{slot}",item)
+                setattr(self.player,f"slot{slot}",item_id)
                 self.player.backpack.remove_item(item_id)
                 break
 
             except Exception as e:
-                print("Error equip: "+e) 
+                # print(f"Error equip: {e}") 
+                raise e
                 return
 
     def unequip_item(self,item_id):
@@ -119,22 +124,23 @@ class Actions:
 
         slots = self.player.slots()
 
+        if not item_id in slots:
+            raise ValueError(f"Item ID {item_id} isnt equiped")
+
         for slot in range(len(slots)):
-            if not slots[slot]:
-                continue
-            if not item_id in slots[slot]:
-                continue
-            else:
+           
+            if item_id == slots[slot]:
                 try:
-                    if slots[slot][2] in [2,3,4]:
-                        self.player.defense -= slots[slot][3]
-                        
+                    item = self.player.backpack.item_info(item_id)
+                    if item[2] in [2,3,4]:
+                        self.player.defense -= item[3]
+
                     setattr(self.player,f"slot{slot}",None)
                     self.player.backpack.put_item(item_id)
                     break
 
                 except Exception as e:
-                    print("Error unequip: "+e) 
+                    print(f"Error unequip: {e}") 
                     return
 
     def _test_item(self,item_id:int):
