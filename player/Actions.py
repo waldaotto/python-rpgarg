@@ -99,9 +99,15 @@ class Actions:
                 continue
 
             try:
-                setattr(self.player,f"slot{slot}",item_id)
+                item = self.player.backpack.item_info(item_id)
+
+                if item[2] in [2,3,4]:
+                    self.player.defense += item[3]
+
+                setattr(self.player,f"slot{slot}",item)
                 self.player.backpack.remove_item(item_id)
                 break
+
             except Exception as e:
                 print("Error equip: "+e) 
                 return
@@ -113,20 +119,23 @@ class Actions:
 
         slots = self.player.slots()
 
-        if not item_id in slots:
-            raise ValueError(f"Item ID {item_id} isn't equiped")
-
         for slot in range(len(slots)):
             if not slots[slot]:
                 continue
+            if not item_id in slots[slot]:
+                continue
+            else:
+                try:
+                    if slots[slot][2] in [2,3,4]:
+                        self.player.defense -= slots[slot][3]
+                        
+                    setattr(self.player,f"slot{slot}",None)
+                    self.player.backpack.put_item(item_id)
+                    break
 
-            try:
-                setattr(self.player,f"slot{slot}",None)
-                self.player.backpack.put_item(item_id)
-                break
-            except Exception as e:
-                print("Error unequip: "+e) 
-                return
+                except Exception as e:
+                    print("Error unequip: "+e) 
+                    return
 
     def _test_item(self,item_id:int):
         """Tests if item exists and is in backpack"""
